@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://i23kxfsbvpq7"]
+
+[node name="WinLines" type="Line2D"]
+width = 14.0
+default_color = Color(0.999993, 0.0664631, 0.366453, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true

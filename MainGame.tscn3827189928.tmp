@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://p82kxx2s84qn"]
+
+[ext_resource type="Script" uid="uid://bjgi5ldghjxbk" path="res://MainGame.gd" id="1_8dnxm"]
+[ext_resource type="Script" uid="uid://dkn5dgg4ngyxn" path="res://SlotMachine.gd" id="2_v3hs3"]
+[ext_resource type="Script" uid="uid://cq05i178t2aix" path="res://ATM.gd" id="3_x5ji8"]
+[ext_resource type="Script" uid="uid://1yluiwn0qjp3" path="res://SuccubusHex.gd" id="4_o8l48"]
+[ext_resource type="Texture2D" uid="uid://d3a6q8vvs3lje" path="res://assets/images/Hex/1.png" id="5_0v7qb"]
+[ext_resource type="Script" uid="uid://dk66b5d4j3r4m" path="res://ShopUI.gd" id="6_qtrx8"]
+[ext_resource type="Script" uid="uid://cmc0jv31kr887" path="res://UI.gd" id="7_led80"]
+
+[node name="MainGame" type="Node"]
+script = ExtResource("1_8dnxm")
+
+[node name="SlotMachine" type="Node2D" parent="."]
+script = ExtResource("2_v3hs3")
+
+[node name="ATM" type="Node2D" parent="."]
+script = ExtResource("3_x5ji8")
+
+[node name="DebtDisplay" type="Label" parent="ATM"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Deposit" type="Button" parent="ATM"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="SuccubusHex" type="Node2D" parent="."]
+script = ExtResource("4_o8l48")
+
+[node name="Sprite2D" type="Sprite2D" parent="SuccubusHex"]
+texture = ExtResource("5_0v7qb")
+
+[node name="ShopUI" type="CanvasLayer" parent="."]
+script = ExtResource("6_qtrx8")
+
+[node name="Panel" type="Panel" parent="ShopUI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopUI/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BuyCharm" type="Button" parent="ShopUI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="BuyCharm2" type="Button" parent="ShopUI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="BuyCharm3" type="Button" parent="ShopUI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("7_led80")
+
+[node name="Coins" type="Label" parent="UI"]
+offset_left = 50.0
+offset_top = 9.0
+offset_right = 250.0
+offset_bottom = 109.0
+
+[node name="Debt" type="Label" parent="UI"]
+offset_left = 450.0
+offset_top = 9.0
+offset_right = 650.0
+offset_bottom = 109.0
+
+[node name="Tickets" type="Label" parent="UI"]
+offset_left = 800.0
+offset_top = 9.0
+offset_right = 1000.0
+offset_bottom = 109.0
+
+[node name="Spin" type="Button" parent="UI"]
+offset_left = 70.0
+offset_top = 1400.0
+offset_right = 270.0
+offset_bottom = 1500.0
+
+[node name="Deposit" type="Button" parent="UI"]
+offset_left = 449.0
+offset_top = 1400.0
+offset_right = 649.0
+offset_bottom = 1500.0
+
+[node name="Shop" type="Button" parent="UI"]
+offset_left = 820.0
+offset_top = 1400.0
+offset_right = 1020.0
+offset_bottom = 1500.0
+
+[connection signal="pressed" from="ATM/Deposit" to="ATM" method="_on_deposit_pressed"]
+[connection signal="pressed" from="UI/Spin" to="." method="_on_spin_button_pressed"]
+[connection signal="pressed" from="UI/Deposit" to="." method="_on_deposit_button_pressed"]
+[connection signal="pressed" from="UI/Shop" to="ShopUI" method="_on_shop_button_pressed"]

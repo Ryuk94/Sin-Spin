@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc7hkifihjt2d"]
+
+[ext_resource type="Script" path="res://demo/menu.gd" id="1_prkl2"]
+[ext_resource type="Script" path="res://addons/music_player/script/music_player.gd" id="2_diln7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_prkl2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -46.0
+offset_right = 118.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Regal" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Play Regal"
+
+[node name="Hell" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Play Hell"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Volume: "
+
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Fade" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Fade"
+
+[node name="FadeVolumeSpinBox" type="SpinBox" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Play"
+
+[node name="Stop" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Stop"
+
+[node name="Pause" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Pause"
+
+[node name="FadeOut" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Fade Out"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Layers:"
+
+[node name="MusicPlayer" type="Node" parent="."]
+script = ExtResource("2_diln7")
+json_path = "res://demo/tracklist.json"
+
+[connection signal="pressed" from="VBoxContainer/Regal" to="." method="_on_regal_pressed" flags=3]
+[connection signal="pressed" from="VBoxContainer/Hell" to="." method="_on_hell_pressed" flags=3]
+[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/VolumeSlider" to="." method="_on_volume_slider_drag_ended"]
+[connection signal="drag_started" from="VBoxContainer/HBoxContainer/VolumeSlider" to="." method="_on_volume_slider_drag_started"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Fade" to="." method="_on_fade_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Stop" to="." method="_on_stop_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/FadeOut" to="." method="_on_fade_out_pressed"]

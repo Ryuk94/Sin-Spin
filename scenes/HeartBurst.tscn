@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://btvk33pffnt6f"]
+
+[ext_resource type="Texture2D" uid="uid://c4fk0b5h0vvhj" path="res://assets/images/heart.png" id="1_50j5r"]
+[ext_resource type="Script" uid="uid://d37hvpolt72ye" path="res://scenes/heart_burst.gd" id="1_rfcub"]
+
+[node name="HeartBurst" type="Node2D"]
+z_index = 5
+script = ExtResource("1_rfcub")
+travel_distance = 60.0
+duration = 4.0
+fps = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(0, 0.25)
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("1_50j5r")
