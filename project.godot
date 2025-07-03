@@ -14,8 +14,8 @@ config/name="Sin & Spin"
 run/main_scene="uid://p82kxx2s84qn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0.115457, 0.0997234, 0.317069, 1)
-boot_splash/image="uid://d3a6q8vvs3lje"
-config/icon="res://icon.svg"
+boot_splash/image="uid://bic4da7nbfbxe"
+config/icon="uid://ba3qta5xcs5la"
 
 [autoload]
 

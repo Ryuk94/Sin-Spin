@@ -9,9 +9,9 @@ var current_state = GameState.SPINNING
 @onready var bedroom := $GameplayRoot/Bedroom
 
 func _ready():
-	DisplayServer.window_set_size(Vector2i(720, 1280))
-	DisplayServer.window_set_position(Vector2i(3760, 80))
-
+	#DisplayServer.window_set_size(Vector2i(720, 1280))
+	#DisplayServer.window_set_position(Vector2i(3760, 80))
+	GlobalMusicPlayer.load_track("main")
 	SceneManager.setup(
 		$GameplayRoot/Bedroom,
 		{
