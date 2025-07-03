@@ -57,6 +57,7 @@ scale = Vector2(0.5, 0.5)
 script = ExtResource("2_qsiih")
 
 [node name="Money" type="Sprite2D" parent="GameplayRoot/Bedroom"]
+visible = false
 z_index = 4
 position = Vector2(-1264, 80)
 rotation = 0.39968
@@ -64,6 +65,7 @@ scale = Vector2(2.24159, 2.24159)
 texture = ExtResource("3_7d840")
 
 [node name="Idle" type="Sprite2D" parent="GameplayRoot/Bedroom"]
+visible = false
 z_index = -12
 position = Vector2(-496, 744)
 scale = Vector2(3.16887, 3.16887)
@@ -406,7 +408,6 @@ theme_override_font_sizes/font_size = 35
 [connection signal="pressed" from="GameplayRoot/SlotMachine/Spin" to="." method="_on_spin_button_pressed"]
 [connection signal="value_changed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinAmountBox" to="GameplayRoot/SlotMachine" method="_on_spin_amount_box_value_changed"]
 [connection signal="pressed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinPurchaseButton" to="GameplayRoot/SlotMachine" method="_on_spin_purchase_button_pressed"]
-[connection signal="pressed" from="SpendRoot/ATM/ATMButtons/Deposit" to="." method="_on_deposit_pressed"]
 [connection signal="pressed" from="SpendRoot/ATM/ATMButtons/Close" to="." method="_on_atm_close_button_pressed"]
 [connection signal="pressed" from="SpendRoot/Shop/CarouselContainer/LeftArrow" to="SpendRoot/Shop" method="show_previous"]
 [connection signal="pressed" from="SpendRoot/Shop/CarouselContainer/RightArrow" to="SpendRoot/Shop" method="show_next"]

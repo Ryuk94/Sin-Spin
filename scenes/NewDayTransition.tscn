@@ -1,11 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcfn5s6oa2urx"]
+[gd_scene load_steps=7 format=3 uid="uid://dcfn5s6oa2urx"]
 
 [ext_resource type="Script" uid="uid://las1tus311bo" path="res://scenes/NewDayTransition.gd" id="1_adfhg"]
 [ext_resource type="Script" uid="uid://bd1qry3e727w8" path="res://scenes/NewDayDisplay.gd" id="2_72md4"]
 [ext_resource type="Shader" uid="uid://bdtfke63i3ajd" path="res://assets/NewDayTransition.gdshader" id="3_s0lq2"]
+[ext_resource type="Texture2D" uid="uid://cym76sj4n8xsq" path="res://assets/Rock020_1K-PNG_Color.png" id="3_t5f5o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t7nss"]
+shader = ExtResource("3_s0lq2")
+shader_parameter/time = 100.0
+shader_parameter/scanline_strength = 0.3
+shader_parameter/distortion_strength = 0.02
+shader_parameter/chroma_offset = 30.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t5f5o"]
 shader = ExtResource("3_s0lq2")
+shader_parameter/time = 0.0
+shader_parameter/scanline_strength = 0.1
+shader_parameter/distortion_strength = 0.005
+shader_parameter/chroma_offset = 1.5
 
 [node name="NewDayTransition" type="Control"]
 layout_mode = 3
@@ -18,29 +30,33 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
+mouse_filter = 1
 script = ExtResource("1_adfhg")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+z_index = 10
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -100.0
-offset_right = 250.0
-offset_bottom = 100.0
+offset_left = -430.0
+offset_top = 300.0
+offset_right = 370.0
+offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="NewDayDisplay" type="RichTextLabel" parent="CenterContainer"]
+z_index = 10
 clip_contents = false
-custom_minimum_size = Vector2(500, 200)
+custom_minimum_size = Vector2(800, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 theme_override_colors/default_color = Color(0.805851, 0.724276, 0.13787, 1)
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
 scroll_active = false
 autowrap_mode = 2
@@ -51,6 +67,15 @@ metadata/_edit_use_anchors_ = true
 [node name="CanvasLayer" type="Node2D" parent="CenterContainer"]
 position = Vector2(56, 17)
 
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/CanvasLayer"]
+material = SubResource("ShaderMaterial_t7nss")
+offset_left = -1290.0
+offset_top = -1083.0
+offset_right = 3491.0
+offset_bottom = 3167.0
+texture = ExtResource("3_t5f5o")
+stretch_mode = 1
+
 [node name="VHS" type="ColorRect" parent="CenterContainer/CanvasLayer"]
 material = SubResource("ShaderMaterial_t5f5o")
 anchors_preset = 15
@@ -60,4 +85,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+mouse_filter = 1
+
+[node name="AutoContinueTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
