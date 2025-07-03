@@ -34,23 +34,23 @@ Once the plugin has been enabled, you can now use the Music Player by either:
 
 Loading and playing a song can be as simple as just typing this:
 
-    GlobalMusicPlayer.load_track(track_name)
+	GlobalMusicPlayer.load_track(track_name)
 
 Given a track's name as referenced in `tracklist.json`, this snippet of code loads the track and plays it at full loudness after loading!
 
 If you want to make some modifications to the track, like setting the volume of the track or its layers, you can get the current track by just calling:
 
-    GlobalMusicPlayer.get_current_track()
+	GlobalMusicPlayer.get_current_track()
 
 Given a music track, you can do things like fading the volume:
 
-    GlobalMusicPlayer.get_current_track().fade_volume(0.5)
+	GlobalMusicPlayer.get_current_track().fade_volume(0.5)
 
 This will fade the volume to half loudness for just 1 second.
 
 Maybe you're done with a track and want to fade-transition to another. Just type:
 
-    GlobalMusicPlayer.fade_to_track(track_name, 1.0, 2.0)
+	GlobalMusicPlayer.fade_to_track(track_name, 1.0, 2.0)
 
 and for 2 seconds, the previous track fades out and gets unloaded. The new track loads, plays, and then fades in to full volume.
 
@@ -58,29 +58,29 @@ and for 2 seconds, the previous track fades out and gets unloaded. The new track
 
 `tracklist.json` should be located in the root of the project folder. Here is an example of a tracklist:
 
-    {
-        "version": 1,
-        "tracks": [
-            {
-                "name": "Regal",
-                "bpm": 160,
-                "artist": "Miguel, the Ace of Spades",
-                "stream": [
-                    "res://asset/music/regal1.ogg",
-                    "res://asset/music/regal2.ogg"
-                ]
-            },
-            {
-                "name": "Hell",
-                "bpm": 160,
-                "artist": "Miguel, the Ace of Spades",
-                "stream": [
-                    "res://asset/music/hell1.ogg",
-                    "res://asset/music/hell2.ogg"
-                ]
-            }
-        ]
-    }
+	{
+		"version": 1,
+		"tracks": [
+			{
+				"name": "Regal",
+				"bpm": 160,
+				"artist": "Miguel, the Ace of Spades",
+				"stream": [
+					"res://asset/music/regal1.ogg",
+					"res://asset/music/regal2.ogg"
+				]
+			},
+			{
+				"name": "Hell",
+				"bpm": 160,
+				"artist": "Miguel, the Ace of Spades",
+				"stream": [
+					"res://asset/music/hell1.ogg",
+					"res://asset/music/hell2.ogg"
+				]
+			}
+		]
+	}
 
 `version` serves as a version header, to distinguish what version is compatible with the addon. Then there's `tracks`, the array containing every track.
 
