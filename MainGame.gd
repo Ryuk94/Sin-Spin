@@ -2,8 +2,7 @@ extends Node
 
 enum GameState { SPINNING, ATM, SHOP, TRANSITION }
 var current_state = GameState.SPINNING
-
-@onready var ui := $UI
+var ui: Node = null
 @onready var slot_machine := $GameplayRoot/SlotMachine
 @onready var shop := $SpendRoot/Shop
 @onready var bedroom := $GameplayRoot/Bedroom
@@ -11,6 +10,14 @@ var current_state = GameState.SPINNING
 func _ready():
 	DisplayServer.window_set_size(Vector2i(720, 1280))
 	DisplayServer.window_set_position(Vector2i(3760, 80))
+
+	await get_tree().process_frame  # ensure the tree is ready
+
+	ui = get_node_or_null("UI")
+	if ui == null:
+		push_error("❌ UI node was not found!")
+		return  # early out to avoid future null errors
+
 	SceneManager.setup(
 		$GameplayRoot/Bedroom,
 		{
@@ -20,10 +27,8 @@ func _ready():
 		}
 	)
 
-	# One-time button hookup
-	var _deposit_button = $SpendRoot/ATM/ATMButtons/Deposit
-	var _close_button = $SpendRoot/ATM/ATMButtons/Close
 	setup_game()
+
 
 func setup_game():
 	Global.debt = calculate_debt_for_day(Global.current_day)
