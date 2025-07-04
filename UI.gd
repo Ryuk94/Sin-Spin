@@ -43,6 +43,9 @@ func update_debt(debt: int) -> void:
 	if atm_label:
 		atm_label.text = "Debt: " + str(debt)
 
+func update_spin_cost(value: int) -> void:
+	var final_cost = Global.spin_price_per_unit * value
+
 func show_spin_button() -> void:
 	if spin_button:
 		spin_button.visible = true

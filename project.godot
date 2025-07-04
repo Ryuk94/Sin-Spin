@@ -20,9 +20,10 @@ config/icon="uid://ba3qta5xcs5la"
 [autoload]
 
 Global="*res://Global.gd"
-GlobalMusicPlayer="*res://addons/music_player/script/music_player.gd"
+GlobalMusicPlayer="res://addons/music_player/script/music_player.gd"
 Hex="*res://utils/hex.gd"
 SceneManager="*res://utils/SceneManager.gd"
+UISoundManager="*res://scenes/ui/UISoundManager.tscn"
 
 [display]
 

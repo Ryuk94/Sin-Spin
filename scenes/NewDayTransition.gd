@@ -12,8 +12,9 @@ func _on_AutoContinueTimer_timeout():
 	_on_continue_button_pressed()
 
 func _on_continue_button_pressed():
-	Global.winnings = 0
-	Global.current_day += 1
-	Global.used_escape_clause = false
-	Global.reset_upgrades()
-	get_tree().change_scene_to_file("res://scenes/MainGame.tscn")
+	# ✅ Preload and manually call next_round() before changing scenes
+	var main_game_scene = preload("res://scenes/MainGame.tscn")
+	var main_game = main_game_scene.instantiate()
+	main_game.next_round()
+
+	get_tree().change_scene_to_packed(main_game_scene)

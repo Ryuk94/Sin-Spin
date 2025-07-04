@@ -99,6 +99,7 @@ func _on_spin_purchase_button_pressed():
 		return
 	get_node("/root/MainGame").buy_spins(amount)
 	set_ui_state(SlotUIState.SPIN_READY)
+	UISoundManager.play_click()
 
 func spin():
 	emit_signal("spin_started")
@@ -285,3 +286,7 @@ func spawn_heart_at_global(global_pos: Vector2):
 	heart.global_position = global_pos
 	heart.start_pos = global_pos
 	heart.duration = randf_range(1.2, 2.5)
+
+
+func _on_spin_amount_box_changed() -> void:
+	UISoundManager.play_click()

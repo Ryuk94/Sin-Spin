@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqfiudbgwawrt"]
+
+[ext_resource type="Script" uid="uid://o5m8sw5qhv2d" path="res://UISoundManager.gd" id="1_cmkcc"]
+[ext_resource type="AudioStream" uid="uid://bh6m725smxdvb" path="res://assets/sounds/Cyber Shadows.mp3" id="2_pmde6"]
+
+[node name="UISoundManager" type="Node"]
+script = ExtResource("1_cmkcc")
+
+[node name="ClickPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="RolloverPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="SwitchPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_pmde6")
+autoplay = true
+parameters/looping = true

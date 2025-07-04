@@ -18,6 +18,7 @@ var compound_penalty_rounds := 0
 var rounds_taken := 0
 var bought_upgrades: Array = []
 var used_escape_clause: bool = false
+var spin_price_per_unit := 1
 
 func apply_upgrade(effect: String):
 	match effect:

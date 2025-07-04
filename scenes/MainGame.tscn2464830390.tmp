@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://p82kxx2s84qn"]
+[gd_scene load_steps=13 format=3 uid="uid://p82kxx2s84qn"]
 
 [ext_resource type="Script" uid="uid://bjgi5ldghjxbk" path="res://MainGame.gd" id="1_vs82q"]
 [ext_resource type="Script" uid="uid://1yluiwn0qjp3" path="res://SuccubusHex.gd" id="2_qsiih"]
@@ -8,8 +8,6 @@
 [ext_resource type="Shader" uid="uid://c8koq23d2fomi" path="res://Succubus.gdshader" id="6_16xnu"]
 [ext_resource type="Script" uid="uid://yixg7xkinklb" path="res://color_rect.gd" id="7_lupq4"]
 [ext_resource type="Texture2D" uid="uid://dlenbeokfkikv" path="res://assets/images/Slots/SlotFrame.png" id="8_4h46e"]
-[ext_resource type="Shader" uid="uid://d2p2m0ho8ipgi" path="res://scenes/SlotDepth.gdshader" id="9_vs82q"]
-[ext_resource type="Texture2D" uid="uid://cu4pgjheumgr6" path="res://assets/overlay_texture.png" id="10_qsiih"]
 [ext_resource type="Script" uid="uid://dk66b5d4j3r4m" path="res://Shop.gd" id="10_r0bag"]
 [ext_resource type="Script" uid="uid://cmc0jv31kr887" path="res://UI.gd" id="11_hogh4"]
 
@@ -29,17 +27,6 @@ shader_parameter/scanline_intensity = 0.095
 shader_parameter/screen_jitter = 0.004
 shader_parameter/vignette_darkness = 1.486
 shader_parameter/screen_size = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsiih"]
-shader = ExtResource("9_vs82q")
-shader_parameter/overlay_texture = ExtResource("10_qsiih")
-shader_parameter/intensity = 0.184
-shader_parameter/zoom = 1.075
-shader_parameter/repeat_strength = 10.0
-shader_parameter/aberration_strength = 0.003
-shader_parameter/ripple_speed = 0.045
-shader_parameter/ripple_strength = 0.05
-shader_parameter/border_softness = 0.56
 
 [sub_resource type="GDScript" id="GDScript_rtryj"]
 script/source = "extends Control
@@ -64,13 +51,13 @@ layer = -1
 [node name="GameplayRoot" type="Node2D" parent="."]
 
 [node name="Bedroom" type="Node2D" parent="GameplayRoot"]
-visible = false
 z_index = 5
 position = Vector2(542, 612)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("2_qsiih")
 
 [node name="Money" type="Sprite2D" parent="GameplayRoot/Bedroom"]
+visible = false
 z_index = 4
 position = Vector2(-1264, 80)
 rotation = 0.39968
@@ -78,6 +65,7 @@ scale = Vector2(2.24159, 2.24159)
 texture = ExtResource("3_7d840")
 
 [node name="Idle" type="Sprite2D" parent="GameplayRoot/Bedroom"]
+visible = false
 z_index = -12
 position = Vector2(-496, 744)
 scale = Vector2(3.16887, 3.16887)
@@ -111,25 +99,7 @@ z_index = 2
 position = Vector2(542, 962)
 texture = ExtResource("8_4h46e")
 
-[node name="ColorRect2" type="ColorRect" parent="GameplayRoot/SlotMachine"]
-z_index = 1
-material = SubResource("ShaderMaterial_qsiih")
-custom_minimum_size = Vector2(300, 300)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 109.0
-offset_top = 991.0
-offset_right = 938.0
-offset_bottom = 1537.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
-
 [node name="Reels" type="HBoxContainer" parent="GameplayRoot/SlotMachine"]
-z_index = 1
 custom_minimum_size = Vector2(600, 400)
 anchors_preset = 15
 anchor_right = 1.0
@@ -161,19 +131,6 @@ custom_minimum_size = Vector2(200, 400)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Polygon2D" type="Polygon2D" parent="GameplayRoot/SlotMachine"]
-position = Vector2(525.496, 826.689)
-scale = Vector2(0.535196, 0.330888)
-color = Color(0.454902, 0.105882, 0.803922, 1)
-polygon = PackedVector2Array(-1106, 424, 1094, 418, 1084, 2608, -1084, 2608)
-
-[node name="Polygon2D2" type="Polygon2D" parent="GameplayRoot/SlotMachine"]
-z_index = -1
-position = Vector2(538, 834)
-scale = Vector2(0.5082, 0.306743)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-1106, 424, 1094, 418, 1084, 2608, -1084, 2608)
-
 [node name="Spin" type="Button" parent="GameplayRoot/SlotMachine"]
 z_index = 2
 offset_left = 384.0
@@ -185,7 +142,6 @@ text = "SPIN"
 icon_alignment = 1
 
 [node name="SpinPurchaseUI" type="Control" parent="GameplayRoot/SlotMachine"]
-z_index = 5
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,7 +150,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SpinPurchase" type="VBoxContainer" parent="GameplayRoot/SlotMachine/SpinPurchaseUI"]
-z_index = 5
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,7 +170,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SpinAmountBox" type="SpinBox" parent="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase"]
-z_index = 10
 custom_minimum_size = Vector2(230, 100)
 layout_mode = 2
 theme_override_constants/buttons_width = 100
@@ -252,7 +206,7 @@ offset_bottom = 1462.0
 script = SubResource("GDScript_rtryj")
 
 [node name="DebtLabel" type="Label" parent="SpendRoot/ATM"]
-z_index = 10
+z_index = 3
 layout_mode = 0
 offset_left = 213.0
 offset_top = -289.0
@@ -263,7 +217,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WinningsLabel" type="Label" parent="SpendRoot/ATM"]
-z_index = 10
+z_index = 3
 layout_mode = 0
 offset_left = 215.0
 offset_top = -433.0
@@ -470,10 +424,8 @@ theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 
 [connection signal="pressed" from="GameplayRoot/SlotMachine/Spin" to="." method="_on_spin_button_pressed"]
-[connection signal="changed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinAmountBox" to="GameplayRoot/SlotMachine" method="_on_spin_amount_box_changed"]
 [connection signal="value_changed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinAmountBox" to="GameplayRoot/SlotMachine" method="_on_spin_amount_box_value_changed"]
 [connection signal="pressed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinPurchaseButton" to="GameplayRoot/SlotMachine" method="_on_spin_purchase_button_pressed"]
-[connection signal="pressed" from="SpendRoot/ATM/ATMButtons/Deposit" to="." method="_on_deposit_pressed"]
 [connection signal="pressed" from="SpendRoot/ATM/ATMButtons/Close" to="." method="_on_atm_close_button_pressed"]
 [connection signal="pressed" from="SpendRoot/Shop/CarouselContainer/LeftArrow" to="SpendRoot/Shop" method="show_previous"]
 [connection signal="pressed" from="SpendRoot/Shop/CarouselContainer/RightArrow" to="SpendRoot/Shop" method="show_next"]

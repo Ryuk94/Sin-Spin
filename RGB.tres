@@ -1,3 +1,9 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://b87d8bq022wo5"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b87d8bq022wo5"]
+
+[ext_resource type="Shader" uid="uid://sfcwe1gl65kw" path="res://slot.gdshader" id="1_kdpi3"]
 
 [resource]
+shader = ExtResource("1_kdpi3")
+shader_parameter/first_color = Vector4(4.29, 6.955, 5.87, 11.165)
+shader_parameter/second_color = Vector4(15.86, 9.46, 7.35, 2.655)
+shader_parameter/angle_radians = 0.0
