@@ -108,19 +108,23 @@ func show_next():
 	if upgrades.size() > 1:
 		current_index = (current_index + 1) % upgrades.size()
 		update_shop_ui()
+		UISoundManager.play_click()
 
 func show_previous():
 	if upgrades.size() > 1:
 		current_index = (current_index - 1 + upgrades.size()) % upgrades.size()
 		update_shop_ui()
+		UISoundManager.play_click()
 
 func purchase_current():
 	var current_upgrade = upgrades[current_index]
 	var cost = 2
+	UISoundManager.play_click()
 
 	if Global.tickets >= cost:
 		Global.tickets -= cost
 		Global.bought_upgrades.append(current_upgrade)
+		Global.apply_upgrade(current_upgrade) # Apply the upgrade effect
 		confirmation_label.text = "Purchased!"
 		upgrades.remove_at(current_index)
 

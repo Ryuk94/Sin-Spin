@@ -89,7 +89,7 @@ color = Color(0.305882, 0.305882, 0.305882, 1)
 polygon = PackedVector2Array(-1106, 424, 1094, 418, 1084, 2608, -1084, 2608)
 
 [node name="SlotMachine" type="Node2D" parent="GameplayRoot"]
-z_index = 5
+z_index = 10
 position = Vector2(1, 0)
 script = ExtResource("5_vtnxl")
 
@@ -129,7 +129,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
 [node name="Reels" type="HBoxContainer" parent="GameplayRoot/SlotMachine"]
-z_index = 1
+z_index = 10
 custom_minimum_size = Vector2(600, 400)
 anchors_preset = 15
 anchor_right = 1.0
@@ -142,6 +142,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Reel1" type="VBoxContainer" parent="GameplayRoot/SlotMachine/Reels"]
+z_index = 5
 custom_minimum_size = Vector2(200, 400)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -298,6 +299,7 @@ theme_override_font_sizes/font_size = 50
 text = "Close"
 
 [node name="Shop" type="Control" parent="SpendRoot"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("10_r0bag")
@@ -415,6 +417,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
+layer = 10
 script = ExtResource("11_hogh4")
 
 [node name="EscapeLabel" type="Label" parent="UI"]
@@ -436,6 +439,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -464,10 +468,60 @@ layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 
-[node name="InterestLabel" type="Label" parent="UI/Counters"]
+[node name="InterestDisplayContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InterestLabelsHBox" type="HBoxContainer" parent="UI/InterestDisplayContainer"]
+layout_mode = 0
+offset_left = 375.0
+offset_top = 920.0
+offset_right = 758.0
+offset_bottom = 962.0
+theme_override_constants/separation = 20
+
+[node name="CurrentInterestLabel" type="Label" parent="UI/InterestDisplayContainer/InterestLabelsHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.922224, 0.910312, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 30
+theme_override_font_sizes/font_size = 30
+text = "Interest: 0"
+
+[node name="TotalInterestEarnedLabel" type="Label" parent="UI/InterestDisplayContainer/InterestLabelsHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.921569, 0.909804, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 30
+theme_override_font_sizes/font_size = 30
+text = "Total Earned: 0"
+
+[node name="Counters2" type="HBoxContainer" parent="."]
+top_level = true
+z_index = 10
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="InterestLabel" type="Label" parent="Counters2"]
+z_index = 10
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
+vertical_alignment = 1
 
 [connection signal="pressed" from="GameplayRoot/SlotMachine/Spin" to="." method="_on_spin_button_pressed"]
 [connection signal="changed" from="GameplayRoot/SlotMachine/SpinPurchaseUI/SpinPurchase/SpinAmountBox" to="GameplayRoot/SlotMachine" method="_on_spin_amount_box_changed"]

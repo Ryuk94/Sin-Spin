@@ -4,7 +4,9 @@ extends CanvasLayer
 @onready var coins_label := get_node_or_null("Counters/CoinsLabel")
 @onready var debt_label := get_node_or_null("Counters/DebtLabel")
 @onready var tickets_label := get_node_or_null("Counters/TicketsLabel")
-@onready var interest_label := get_node_or_null("Counters/InterestLabel")
+@onready var current_interest_label := get_node_or_null("InterestDisplayContainer/InterestLabelsHBox/CurrentInterestLabel")
+@onready var total_interest_earned_label := get_node_or_null("InterestDisplayContainer/InterestLabelsHBox/TotalInterestEarnedLabel")
+@onready var interest_display_container := get_node_or_null("InterestDisplayContainer")
 @onready var escape_label := get_node_or_null("EscapeLabel")
 @onready var winnings_label := get_node_or_null("/root/MainGame/SpendRoot/ATM/WinningsLabel")
 @onready var spin_button := get_node_or_null("/root/MainGame/GameplayRoot/SlotMachine/Spin")
@@ -44,7 +46,7 @@ func update_debt(debt: int) -> void:
 		atm_label.text = "Debt: " + str(debt)
 
 func update_spin_cost(value: int) -> void:
-	var final_cost = Global.spin_price_per_unit * value
+	var _final_cost = Global.spin_price_per_unit * value
 
 func show_spin_button() -> void:
 	if spin_button:
@@ -68,11 +70,19 @@ func hide_atm() -> void:
 		close_button.visible = false
 
 func show_interest_popup(amount: int) -> void:
-	if interest_label:
-		interest_label.text = "+%d coins gained from interest" % amount
-		interest_label.visible = true
+	if current_interest_label:
+		current_interest_label.text = "+%d coins gained from interest" % amount
+		current_interest_label.visible = true
+		if interest_display_container:
+			interest_display_container.visible = true
 		await get_tree().create_timer(2).timeout
-		interest_label.visible = false
+		current_interest_label.visible = false
+		if interest_display_container:
+			interest_display_container.visible = false
+
+func update_total_interest_earned(amount: int) -> void:
+	if total_interest_earned_label:
+		total_interest_earned_label.text = "Total Earned: %d" % amount
 
 func show_escape_clause_popup() -> void:
 	if escape_label:

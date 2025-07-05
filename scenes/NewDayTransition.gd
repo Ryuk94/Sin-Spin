@@ -1,7 +1,10 @@
 extends Control
 
+signal transition_finished
+
 func _ready():
-	$CenterContainer/NewDayDisplay.text = "[center][wave amp=10 freq=5]Day %d. The horrors persist and so does your debt[/wave][/center]" % (Global.current_day + 1)
+	# Update the day label immediately when the transition scene is ready
+	$CenterContainer/NewDayDisplay.text = "[center][wave amp=10 freq=5]Day %d. The horrors persist and so does your debt[/wave][/center]" % Global.current_day
 	$AutoContinueTimer.start()
 
 func _unhandled_input(event):
@@ -12,9 +15,7 @@ func _on_AutoContinueTimer_timeout():
 	_on_continue_button_pressed()
 
 func _on_continue_button_pressed():
-	# ✅ Preload and manually call next_round() before changing scenes
-	var main_game_scene = preload("res://scenes/MainGame.tscn")
-	var main_game = main_game_scene.instantiate()
-	main_game.next_round()
-
-	get_tree().change_scene_to_packed(main_game_scene)
+	# Emit signal to notify MainGame that transition is finished
+	transition_finished.emit()
+	# Queue the current scene for deletion
+	queue_free()
