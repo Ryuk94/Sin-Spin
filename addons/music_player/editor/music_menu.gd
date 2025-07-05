@@ -1,10 +1,16 @@
 @tool
 extends Control
 
-var _track_layer_ps: PackedScene = preload("res://addons/music_player/editor/track_layer_panel.tscn")
+var _track_layer_ps: PackedScene = preload(
+	"res://addons/music_player/editor/track_layer_panel.tscn"
+)
 var _track_ps: PackedScene = preload("res://addons/music_player/editor/track_panel.tscn")
-var _create_track_ps: PackedScene = preload("res://addons/music_player/editor/create_track_dialogue.tscn")
-var _edit_track_ps: PackedScene = preload("res://addons/music_player/editor/edit_track_dialogue.tscn")
+var _create_track_ps: PackedScene = preload(
+	"res://addons/music_player/editor/create_track_dialogue.tscn"
+)
+var _edit_track_ps: PackedScene = preload(
+	"res://addons/music_player/editor/edit_track_dialogue.tscn"
+)
 
 var _music_player: MusicPlayer
 
@@ -49,7 +55,7 @@ func _enter_tree() -> void:
 
 
 # func _ready() -> void:
-# 	_load_tracks()	
+# 	_load_tracks()
 
 
 func _add_track_panel(t: TrackInfo) -> void:
@@ -87,7 +93,7 @@ func _load_layers(t: String) -> void:
 		for s: String in _music_player.tracklist[t].stream:
 			_add_track_layer_panel(_music_player.tracklist[t], i)
 			i += 1
-	
+
 	var b: Button = Button.new()
 	b.text = "+ Add Layer"
 	b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -101,13 +107,13 @@ func _on_layer_mute_toggled(muted: bool, layer_index: int) -> void:
 		_current_track.set_layer_volume(layer_index, 0.0)
 	else:
 		_current_track.set_layer_volume(layer_index, 1.0)
-	
+
 
 func _on_track_open(tn: String) -> void:
 	# Load the current track and stop playing the previous one
-	if (!_music_player.load_track(tn, 1.0, false)):
+	if !_music_player.load_track(tn, 1.0, false):
 		return
-	
+
 	# Load all the layer panels
 	_clear_layers()
 	_load_layers(tn)
@@ -158,20 +164,17 @@ func _on_track_list_load_dialogue_file_selected(path: String) -> void:
 		_load_tracks()
 	elif _tracklist_file_dialogue.file_mode == FileDialog.FILE_MODE_SAVE_FILE:
 		_save_tracklist(path)
-	
+
 	_on_track_list_load_dialogue_canceled()
 
 
 func _save_tracklist(path: String) -> void:
 	var write_to = FileAccess.open(path, FileAccess.WRITE)
-	var dic: Dictionary = {
-		"version": MusicPlayer.CURRENT_VERSION,
-		"tracks": []
-	}
+	var dic: Dictionary = {"version": MusicPlayer.CURRENT_VERSION, "tracks": []}
 
 	for t: TrackInfo in _music_player.tracklist.values():
 		dic["tracks"].append(t.serialize())
-	
+
 	var json_string = JSON.stringify(dic)
 	write_to.store_line(json_string)
 	_dirty_tracklist = false
@@ -180,11 +183,19 @@ func _save_tracklist(path: String) -> void:
 
 func _clear_layers() -> void:
 	_controls.track = null
-	_layer_container.get_children().all(func (c): c.queue_free(); return true)
+	_layer_container.get_children().all(
+		func(c):
+			c.queue_free()
+			return true
+	)
 
 
 func _clear_tracks() -> void:
-	_track_container.get_children().all(func(c): c.queue_free(); return true)
+	_track_container.get_children().all(
+		func(c):
+			c.queue_free()
+			return true
+	)
 
 
 func _on_add_layer_button_pressed() -> void:
@@ -234,7 +245,7 @@ func _on_edit_track_applied(t: TrackInfo) -> void:
 		_popup_accept_dialog("Track %s already exists!" % t.name)
 		_on_track_list_load_dialogue_canceled()
 		return
-	
+
 	var tt = _music_player.tracklist[_track_editing]
 	t.stream = tt.stream
 	if !_music_player.modify_track(_track_editing, t):
@@ -258,7 +269,7 @@ func _on_stream_layer_dialogue_file_selected(path: String) -> void:
 	_on_track_open(_current_track.track_info.name)
 	_dirty_tracklist = true
 	_on_track_list_load_dialogue_canceled()
-	
+
 
 func _on_layer_remove_requested(index: int) -> void:
 	_current_track.track_info.stream.remove_at(index)
@@ -270,7 +281,7 @@ func _on_layer_remove_requested(index: int) -> void:
 func _on_track_removed(tn: String):
 	if _current_track && tn == _current_track.track_info.name:
 		_clear_layers()
-		
+
 	_music_player.remove_track(tn)
 	_clear_tracks()
 	_load_tracks()
@@ -280,7 +291,7 @@ func _on_track_removed(tn: String):
 
 func _on_track_editing(tn: String) -> void:
 	_track_editing = tn
-	
+
 	_track_info_dialog = _edit_track_ps.instantiate()
 	_track_info_dialog.connect("applied", _on_edit_track_applied)
 	_track_info_dialog.close_requested.connect(_on_create_track_cancelled)

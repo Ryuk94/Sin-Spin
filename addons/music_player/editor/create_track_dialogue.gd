@@ -1,10 +1,10 @@
 @tool
 extends ConfirmationDialog
 
-@onready var _name_edit: TextEdit		= %NameEdit
-@onready var _artist_edit: TextEdit		= %ArtistEdit
-@onready var _bpm_edit: TextEdit		= %BPMEdit
-@onready var _beat_count_edit: TextEdit	= %BeatCountEdit
+@onready var _name_edit: TextEdit = %NameEdit
+@onready var _artist_edit: TextEdit = %ArtistEdit
+@onready var _bpm_edit: TextEdit = %BPMEdit
+@onready var _beat_count_edit: TextEdit = %BeatCountEdit
 
 signal created(t: TrackInfo)
 

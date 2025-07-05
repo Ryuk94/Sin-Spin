@@ -1,10 +1,12 @@
 @tool
 extends MarginContainer
 
-@onready var _track_label: Label  = $MarginContainer/BoxContainer/TrackLabel
-@onready var _controls_container  = $MarginContainer/BoxContainer/HBoxContainer
+@onready var _track_label: Label = $MarginContainer/BoxContainer/TrackLabel
+@onready var _controls_container = $MarginContainer/BoxContainer/HBoxContainer
 @onready var _time_slider: Slider = $MarginContainer/BoxContainer/HBoxContainer/TimeSlider
-@onready var _time_label:  Label  = $MarginContainer/BoxContainer/HBoxContainer/TimeLabel
+signal play_pressed(paused: bool)
+signal stop_pressed
+signal seeked(new_value: float)
 
 var track: Track:
 	set(v):
@@ -12,7 +14,7 @@ var track: Track:
 			reset()
 		if track:
 			track.finished.disconnect(reset)
-		
+
 		if v:
 			_track_label.text = "Now playing: %s - %s" % [v.track_info.name, v.track_info.artist]
 			_play_button.disabled = false
@@ -32,9 +34,13 @@ var _playing: bool = false:
 		if Engine.is_editor_hint():
 			_play_button.text = ""
 			if !v:
-				_play_button.icon = EditorInterface.get_editor_theme().get_icon("Play", "EditorIcons")
+				_play_button.icon = EditorInterface.get_editor_theme().get_icon(
+					"Play", "EditorIcons"
+				)
 			else:
-				_play_button.icon = EditorInterface.get_editor_theme().get_icon("Pause", "EditorIcons")
+				_play_button.icon = EditorInterface.get_editor_theme().get_icon(
+					"Pause", "EditorIcons"
+				)
 		else:
 			_play_button.icon = null
 			if !v:
@@ -46,10 +52,6 @@ var _first_play: bool = false
 var _dragging: bool = false
 var _play_button: Button
 var _stop_button: Button
-
-signal play_pressed(paused: bool)
-signal stop_pressed()
-signal seeked(new_value: float)
 
 
 func _enter_tree() -> void:
@@ -77,17 +79,22 @@ func _ready_deferred() -> void:
 		_stop_button.text = "Stop"
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Display time information on the controls
 	if track:
 		# Label text
 		var seconds = "%0*d" % [2, int(track.time) % 60]
-		_time_label.text = str("%d:%s | %d:%d" % [\
-			int(track.time / 60.0), \
-			seconds, \
-			track.measure, \
-			track.beat, \
-		])
+		_time_label.text = str(
+			(
+				"%d:%s | %d:%d"
+				% [
+					int(track.time / 60.0),
+					seconds,
+					track.measure,
+					track.beat,
+				]
+			)
+		)
 
 		# Slider position
 		if !_dragging:
@@ -105,7 +112,7 @@ func _on_play_pause_button_pressed() -> void:
 			_first_play = true
 		else:
 			track.pause()
-	
+
 	_playing = !_playing
 	play_pressed.emit(_playing)
 

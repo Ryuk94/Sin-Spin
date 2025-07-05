@@ -12,10 +12,12 @@ var alpha: float = 1.0
 
 @onready var sprite: Sprite2D = get_node("Sprite2D")
 
+
 func _ready():
 	drift_angle = randf_range(-PI, PI)
 	sprite.modulate = Color(1, 1, 1, 1)
 	set_process(true)
+
 
 func _process(delta: float) -> void:
 	t += delta

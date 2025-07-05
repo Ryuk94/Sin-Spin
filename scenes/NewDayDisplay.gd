@@ -6,10 +6,12 @@ var jitter_timer := 0.0
 var jitter_interval := 1.0 / 6.0  # fake 6 FPS movement
 var target_opacity := 1.0
 
+
 func _ready():
 	self.modulate.a = 0.0  # start transparent
 	self.visible_characters = -1
 	set_process(true)
+
 
 func _process(delta):
 	# Fade in

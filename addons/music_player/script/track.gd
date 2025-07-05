@@ -11,10 +11,10 @@ const MIN_DB = -80.0
 
 @export var track_info: TrackInfo
 @export var bus: String = "Music"
-var volume: float = 1.0 :
+var volume: float = 1.0:
 	set(val):
 		volume = val
-		if (_stream):
+		if _stream:
 			_stream.volume_db = _calculate_db(val)
 
 var beat: int:
@@ -34,13 +34,16 @@ var length: float:
 		return _streamlist.get_length()
 
 var bpm: float:
-	get(): return track_info.bpm
+	get():
+		return track_info.bpm
 
-var _spb: float:	# Seconds per beat
-	get(): return 60.0 / bpm
+var _spb: float:  # Seconds per beat
+	get():
+		return 60.0 / bpm
 
-var beat_count: int:			# Beats in a measure
-	get(): return track_info.beat_count
+var beat_count: int:  # Beats in a measure
+	get():
+		return track_info.beat_count
 
 var _stream: AudioStreamPlayer
 var _streamlist: AudioStreamSynchronized
@@ -51,7 +54,7 @@ var _layer_tweens: Array[Tween]
 var _time: float
 var _prev_time: float
 
-var playing: bool = false :
+var playing: bool = false:
 	set(val):
 		playing = val
 		if _stream:
@@ -63,8 +66,7 @@ var playing: bool = false :
 				_stream.stop()
 				_time = 0
 
-
-var stream_paused: bool = false :
+var stream_paused: bool = false:
 	set(val):
 		stream_paused = val
 		if _stream:
@@ -98,7 +100,7 @@ func _ready():
 			_streamlist.set_sync_stream(i, stream)
 			_streamlist.set_sync_stream_volume(i, _calculate_db(_layer_volumes[i]))
 			i += 1
-		
+
 		_stream.finished.connect(_on_stream_finished)
 	else:
 		printerr("No track info found!")
@@ -109,9 +111,11 @@ func _process(_delta):
 	# Emit the beat_passed signal upon every beat
 	if playing && !stream_paused:
 		_time = _stream.get_playback_position()
-		if (fmod(_prev_time, _spb) <= fmod(_time, _spb)):
+		if fmod(_prev_time, _spb) <= fmod(_time, _spb):
 			beat_passed.emit(_time, beat, measure)
 		_prev_time = _time
+
+
 # 	# Apply the global and layer volumes
 # 	if _tween.is_running():
 # 		_apply_volume()
@@ -200,24 +204,27 @@ func fade_out(duration: float = 1.0) -> void:
 func get_layer_count() -> int:
 	return track_info.layer_count
 
+
 ### Checks if the track is currently playing
 #	Returns: A boolean to show if the track is playing
 func is_playing() -> bool:
 	return playing
 
+
 ### Checks if the track is currently paused
 #	Returns: A boolean to show if the track is paused
 func is_stream_paused() -> bool:
 	return stream_paused
-	
+
 
 #########################################################################################
 #
 #	Private functions
 #
 
-func _calculate_db(normal_volume: float) -> float:	
-	return lerp(MIN_DB, MAX_DB, pow(normal_volume, 1.0/10.0))
+
+func _calculate_db(normal_volume: float) -> float:
+	return lerp(MIN_DB, MAX_DB, pow(normal_volume, 1.0 / 10.0))
 
 
 func _apply_volume() -> void:

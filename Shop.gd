@@ -26,6 +26,32 @@ const UPGRADE_ICONS = {
 	"hex_hand": preload("res://assets/icons/upgrades/hand.png")
 }
 
+const UPGRADE_DISPLAY_NAMES = {
+	"debt_engine": "Infernal Debt Engine",
+	"tithe": "Hex’s Tithe",
+	"escape_clause": "The Escape Clause",
+	"infernal_interest": "Infernal Interest",
+	"hex_hack": "Hex’s Hack",
+	"double_damnation": "Double or Damnation",
+	"compound_suffering": "Compound Suffering",
+	"succubus_wink": "Succubus’s Wink",
+	"greed_dividend": "Greed Dividend",
+	"hex_hand": "Hex’s Hand"
+}
+
+const UPGRADE_DESCRIPTIONS = {
+	"debt_engine": "Start of day bonus coins = half of previous day's interest.",
+	"tithe": "Gain 4 tickets instantly.",
+	"escape_clause": "End day early if 70% of debt is paid. Lose all upgrades.",
+	"infernal_interest": "+5% interest rate.",
+	"hex_hack": "10% chance for an extra spin per round.",
+	"double_damnation": "Halve luck, double winnings.",
+	"compound_suffering": "+1% interest per round if debt unpaid.",
+	"succubus_wink": "+2 Luck.",
+	"greed_dividend": "+1 coin per spin per 50 debt.",
+	"hex_hand": "Reroll one losing reel each spin."
+}
+
 var upgrades: Array = []
 var current_index := 0
 
@@ -42,9 +68,11 @@ var current_index := 0
 
 enum ShopUIState { HIDDEN, ACTIVE, LOCKED }
 
+
 func _ready():
 	if Global.current_day == 1:
 		rotate_shop()
+
 
 func rotate_shop():
 	upgrades.clear()
@@ -52,10 +80,12 @@ func rotate_shop():
 	current_index = 0
 	update_shop_ui()
 
+
 func pick_new_upgrades(count: int) -> Array:
 	var pool = UPGRADE_POOL.duplicate()
 	pool.shuffle()
 	return pool.slice(0, count)
+
 
 func open_shop():
 	if upgrades.is_empty():
@@ -63,6 +93,7 @@ func open_shop():
 	else:
 		set_ui_state(ShopUIState.ACTIVE)
 		update_shop_ui()
+
 
 func set_ui_state(state: ShopUIState):
 	match state:
@@ -80,8 +111,10 @@ func set_ui_state(state: ShopUIState):
 			$MarginContainer.visible = true
 			$CarouselContainer.visible = true
 
+
 func open_atm():
 	visible = true
+
 
 func update_shop_ui():
 	if upgrades.is_empty():
@@ -104,17 +137,20 @@ func update_shop_ui():
 	left_arrow.disabled = upgrades.size() <= 1
 	right_arrow.disabled = upgrades.size() <= 1
 
+
 func show_next():
 	if upgrades.size() > 1:
 		current_index = (current_index + 1) % upgrades.size()
 		update_shop_ui()
 		UISoundManager.play_click()
 
+
 func show_previous():
 	if upgrades.size() > 1:
 		current_index = (current_index - 1 + upgrades.size()) % upgrades.size()
 		update_shop_ui()
 		UISoundManager.play_click()
+
 
 func purchase_current():
 	var current_upgrade = upgrades[current_index]
@@ -124,7 +160,7 @@ func purchase_current():
 	if Global.tickets >= cost:
 		Global.tickets -= cost
 		Global.bought_upgrades.append(current_upgrade)
-		Global.apply_upgrade(current_upgrade) # Apply the upgrade effect
+		Global.apply_upgrade(current_upgrade)  # Apply the upgrade effect
 		confirmation_label.text = "Purchased!"
 		upgrades.remove_at(current_index)
 
@@ -139,30 +175,10 @@ func purchase_current():
 	else:
 		confirmation_label.text = "Not enough tickets."
 
+
 func upgrade_name_to_display(upgrade: String) -> String:
-	match upgrade:
-		"debt_engine": return "Infernal Debt Engine"
-		"tithe": return "Hex’s Tithe"
-		"escape_clause": return "The Escape Clause"
-		"infernal_interest": return "Infernal Interest"
-		"hex_hack": return "Hex’s Hack"
-		"double_damnation": return "Double or Damnation"
-		"compound_suffering": return "Compound Suffering"
-		"succubus_wink": return "Succubus’s Wink"
-		"greed_dividend": return "Greed Dividend"
-		"hex_hand": return "Hex’s Hand"
-		_: return upgrade.capitalize()
+	return UPGRADE_DISPLAY_NAMES.get(upgrade, upgrade.capitalize())
+
 
 func get_upgrade_description(upgrade: String) -> String:
-	match upgrade:
-		"debt_engine": return "Start of day bonus coins = half of previous day's interest."
-		"tithe": return "Gain 4 tickets instantly."
-		"escape_clause": return "End day early if 70% of debt is paid. Lose all upgrades."
-		"infernal_interest": return "+5% interest rate."
-		"hex_hack": return "10% chance for an extra spin per round."
-		"double_damnation": return "Halve luck, double winnings."
-		"compound_suffering": return "+1% interest per round if debt unpaid."
-		"succubus_wink": return "+2 Luck."
-		"greed_dividend": return "+1 coin per spin per 50 debt."
-		"hex_hand": return "Reroll one losing reel each spin."
-		_: return "Temptation beyond words…"
+	return UPGRADE_DESCRIPTIONS.get(upgrade, "Temptation beyond words…")

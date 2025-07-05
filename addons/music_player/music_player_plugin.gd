@@ -10,8 +10,10 @@ var main_panel_instance
 # Initialization
 func _enter_tree():
 	# Adds the music player type
-	add_custom_type("MusicPlayer", "Node", preload("script/music_player.gd"), preload("assets/MusicPlayer.svg"))
-	
+	add_custom_type(
+		"MusicPlayer", "Node", preload("script/music_player.gd"), preload("assets/MusicPlayer.svg")
+	)
+
 	# Adds the music player as an autoload
 	add_autoload_singleton(AUTOLOAD_NAME, "res://addons/music_player/script/music_player.gd")
 

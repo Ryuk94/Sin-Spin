@@ -30,7 +30,7 @@ func _on_menu_button_pressed(id: int) -> void:
 			edit_requested.emit(track_info.name)
 		_POPUP_ID_REMOVE:
 			remove_requested.emit(track_info.name)
-	
+
 
 func reprint_track_info() -> void:
 	if track_info:

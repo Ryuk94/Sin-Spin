@@ -22,10 +22,22 @@ func _enter_tree() -> void:
 	#  Os.execute() doesn't really sound like a good idea ngl, but i'd rather not make someone compile something for a small feature
 	if track_info:
 		# Generate the necessary files
-		var preview_path = 'user://preview_%s_%s.png' % [track_info.name, layer_index]
-		var in_path  = ProjectSettings.globalize_path(track_info.stream[layer_index])
+		var preview_path = "user://preview_%s_%s.png" % [track_info.name, layer_index]
+		var in_path = ProjectSettings.globalize_path(track_info.stream[layer_index])
 		var out_path = ProjectSettings.globalize_path(preview_path)
-		OS.execute("ffmpeg", ["-i", in_path, "-filter_complex", "compand,showwavespic=s=1000x50:colors=#e0e0e0", "-frames:v", "1", out_path], []) 
+		OS.execute(
+			"ffmpeg",
+			[
+				"-i",
+				in_path,
+				"-filter_complex",
+				"compand,showwavespic=s=1000x50:colors=#e0e0e0",
+				"-frames:v",
+				"1",
+				out_path
+			],
+			[]
+		)
 
 		# Access the files
 		if FileAccess.file_exists(preview_path):
@@ -35,7 +47,6 @@ func _enter_tree() -> void:
 			# _waveform.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			_waveform.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			_waveform.set_anchors_preset(Control.LayoutPreset.PRESET_FULL_RECT)
-			
 
 
 func _ready() -> void:

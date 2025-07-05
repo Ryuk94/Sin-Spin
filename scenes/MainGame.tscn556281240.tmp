@@ -62,7 +62,6 @@ script = ExtResource("1_vs82q")
 layer = -1
 
 [node name="GameplayRoot" type="Node2D" parent="."]
-scale = Vector2(0.68, 0.68)
 
 [node name="Bedroom" type="Node2D" parent="GameplayRoot"]
 visible = false
@@ -243,7 +242,6 @@ theme_override_font_sizes/font_size = 26
 [node name="SpendRoot" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-scale = Vector2(0.68, 0.68)
 
 [node name="ATM" type="Control" parent="SpendRoot"]
 anchors_preset = 0
@@ -425,7 +423,6 @@ offset_left = 114.0
 offset_top = 837.0
 offset_right = 955.0
 offset_bottom = 946.0
-scale = Vector2(0.56, 0.56)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 
@@ -434,11 +431,10 @@ custom_minimum_size = Vector2(50, 50)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 101.0
-offset_right = 186.0
+offset_left = -25.0
+offset_right = 25.0
 offset_bottom = 50.0
 grow_horizontal = 2
-scale = Vector2(0.640002, 0.640002)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
@@ -475,21 +471,16 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 338.0
-offset_bottom = 627.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.681911, 0.681911)
 mouse_filter = 2
 
 [node name="InterestLabelsHBox" type="HBoxContainer" parent="UI/InterestDisplayContainer"]
 layout_mode = 0
-offset_left = 338.754
-offset_top = 913.609
-offset_right = 721.754
-offset_bottom = 955.609
+offset_left = 375.0
+offset_top = 920.0
+offset_right = 758.0
+offset_bottom = 962.0
 theme_override_constants/separation = 20
 
 [node name="CurrentInterestLabel" type="Label" parent="UI/InterestDisplayContainer/InterestLabelsHBox"]

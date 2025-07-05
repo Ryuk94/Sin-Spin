@@ -11,40 +11,26 @@ config_version=5
 [application]
 
 config/name="Sin & Spin"
-run/main_scene="uid://p82kxx2s84qn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/bg_color=Color(0.115457, 0.0997234, 0.317069, 1)
+run/main_scene="res://scenes/MainGame.tscn"
+config/features=PackedStringArray("4.4")
 boot_splash/image="uid://bic4da7nbfbxe"
 config/icon="uid://ba3qta5xcs5la"
 
 [autoload]
 
-Global="*res://Global.gd"
-GlobalMusicPlayer="res://addons/music_player/script/music_player.gd"
-Hex="*res://utils/hex.gd"
+Global="*res://autoload/Global.gd"
+UI="*res://UI.gd"
 SceneManager="*res://utils/SceneManager.gd"
 UISoundManager="*res://scenes/ui/UISoundManager.tscn"
 
 [display]
 
-window/size/viewport_width=1080
-window/size/viewport_height=1920
-window/size/initial_position_type=0
-window/size/initial_position=Vector2i(1600, 0)
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_height"
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/window_width_override=720
+window/size/window_height_override=1280
 window/handheld/orientation=1
 
 [dotnet]
 
-project/assembly_name="Sinful"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/music_player/plugin.cfg")
-
-[rendering]
-
-textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+project/assembly_name="Sin & Spin"

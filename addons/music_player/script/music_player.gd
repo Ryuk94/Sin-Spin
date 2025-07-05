@@ -36,11 +36,17 @@ func load_tracklist(filepath: String) -> bool:
 	var file = FileAccess.open(filepath, FileAccess.READ)
 	if !file:
 		if filepath == GLOBAL_TRACKLIST:
-			push_warning("Global tracklist not found! Make sure you create a tracklist in the Music Manager screen and save it to \'%s\'" % GLOBAL_TRACKLIST)
-		else: push_error("File %s not found!" % filepath)
+			push_warning(
+				(
+					"Global tracklist not found! Make sure you create a tracklist in the Music Manager screen and save it to \'%s\'"
+					% GLOBAL_TRACKLIST
+				)
+			)
+		else:
+			push_error("File %s not found!" % filepath)
 		return false
 	var content = file.get_as_text()
-	
+
 	# Parse the JSON file
 	var json = JSON.new()
 	var newTracklist: Dictionary
@@ -70,18 +76,25 @@ func load_tracklist(filepath: String) -> bool:
 			newTrack.beat_count = t["beat_count"]
 			newTrack.stream = t["stream"]
 			newTracklist[newTrack.name] = newTrack
-			
+
 	else:
-		push_error("JSON Parse Error: ", json.get_error_message(), " in ", file, " at line ", json.get_error_line())
+		push_error(
+			"JSON Parse Error: ",
+			json.get_error_message(),
+			" in ",
+			file,
+			" at line ",
+			json.get_error_line()
+		)
 		return false
-	
+
 	loaded_tracklist.emit()
 	json_path = filepath
-	
+
 	# Clear the tracklist if it exists
 	if !tracklist.is_empty():
 		tracklist.clear()
-	
+
 	# Unload the current track
 	unload_track()
 
@@ -94,7 +107,7 @@ func load_tracklist(filepath: String) -> bool:
 #	Returns true if the tracklist has that track
 func has_track(tn: String) -> bool:
 	return tracklist.has(tn)
-	
+
 
 ### Adds a new track to the tracklist
 #	t: Info of the track you want to add
@@ -102,7 +115,7 @@ func has_track(tn: String) -> bool:
 func add_track(t: TrackInfo) -> bool:
 	if has_track(t.name):
 		return false
-	
+
 	tracklist[t.name] = t
 	return true
 
@@ -122,7 +135,7 @@ func remove_track(tn: String) -> TrackInfo:
 
 ### Modifies a track with the passed in TrackInfo
 #	tn: Name of the track you want to modify
-#	ti: The track info to 
+#	ti: The track info to
 #	Returns the modified track info
 func modify_track(tn: String, ti: TrackInfo) -> TrackInfo:
 	if has_track(tn):
@@ -142,9 +155,9 @@ func modify_track(tn: String, ti: TrackInfo) -> TrackInfo:
 func load_track(trackname: String, vol: float = 1.0, autoplay: bool = true) -> bool:
 	if has_track(trackname):
 		#if _current_track && _current_track.name == trackname:
-			## Ignore if the provided track is already the thing
-			#print("Track (" + trackname + ") is already loaded!")
-			#return false
+		## Ignore if the provided track is already the thing
+		#print("Track (" + trackname + ") is already loaded!")
+		#return false
 		#else:
 		# Unload the current track
 		unload_track()
@@ -156,15 +169,16 @@ func load_track(trackname: String, vol: float = 1.0, autoplay: bool = true) -> b
 
 		# Add the newly created track to the scene tree, and set it as the current track
 		add_child(t)
-		if autoplay: t.play()
+		if autoplay:
+			t.play()
 		_current_track = t
 		loaded_track.emit(trackname)
 	else:
 		printerr("Track (" + trackname + ") does not exist!")
 		return false
-	
+
 	return true
-	
+
 
 ### Fades the current track to a new track
 #	trackname: Name of the track to fade to
@@ -179,12 +193,12 @@ func fade_to_track(trackname: String, vol: float = 1.0, duration: float = 1.0) -
 			if _current_track.name == trackname:
 				print("Track (" + trackname + ") is already loaded!")
 				return false
-			
+
 			# Fade the previous track out
 			_current_track.fade_finished.connect(_current_track.queue_free)
 			_current_track.fade_finished.connect(func(): unloaded_track.emit(_current_track.name))
 			_current_track.fade_out(duration)
-			_current_track.name = '__goodbye__'
+			_current_track.name = "__goodbye__"
 
 		# Create a new track that fades in
 		var t: Track = _create_track_node(trackname)
@@ -196,11 +210,11 @@ func fade_to_track(trackname: String, vol: float = 1.0, duration: float = 1.0) -
 		t.play()
 		t.fade_volume(vol, duration)
 		_current_track = t
-		
+
 	else:
 		printerr("Track (" + trackname + ") does not exist!")
 		return false
-	
+
 	return true
 
 
@@ -236,7 +250,7 @@ func stop() -> void:
 #	Returns: The current track
 func get_current_track() -> Track:
 	return _current_track
-	
+
 
 #########################################################################################
 #
@@ -245,7 +259,7 @@ func get_current_track() -> Track:
 
 
 func _is_track_dictionary_valid(t: Dictionary) -> bool:
-	var keys = ['name', 'artist', 'bpm', 'beat_count', 'stream']
+	var keys = ["name", "artist", "bpm", "beat_count", "stream"]
 	return t.keys().all(func(k): return keys.has(k))
 
 

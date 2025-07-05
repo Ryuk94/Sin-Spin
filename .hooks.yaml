@@ -1,0 +1,13 @@
+# .hooks.yaml
+
+pre-commit:
+  commands:
+    format:
+      run: make format
+    lint:
+      run: make lint
+
+pre-push:
+  commands:
+    test:
+      run: make test

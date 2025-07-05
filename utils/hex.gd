@@ -3,8 +3,10 @@ extends Node
 # Called once in MainGame or a scene's _ready()
 var hex_node: Node = null
 
+
 func setup(hex_parent: Node):
 	hex_node = hex_parent
+
 
 func set_hex_state(state: String) -> void:
 	if hex_node == null:

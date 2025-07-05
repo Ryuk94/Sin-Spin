@@ -3,6 +3,7 @@ extends Node
 var hex_nodes := {}
 var scene_nodes := {}
 
+
 func setup(hex_root: Node, scene_dict: Dictionary):
 	hex_nodes = {
 		"Idle": hex_root.get_node_or_null("Idle"),
@@ -11,11 +12,13 @@ func setup(hex_root: Node, scene_dict: Dictionary):
 	scene_nodes = scene_dict
 	_set_all_invisible()
 
+
 func _set_all_invisible():
 	for node in hex_nodes.values():
 		node.visible = false
 	for node in scene_nodes.values():
 		node.visible = false
+
 
 func show_scene(scene_name: String, hex_state: String = "Idle"):
 	_set_all_invisible()
@@ -29,5 +32,3 @@ func show_scene(scene_name: String, hex_state: String = "Idle"):
 		hex_nodes[hex_state].visible = true
 	else:
 		push_warning("Hex state '%s' not found in SceneManager." % hex_state)
-		
-		

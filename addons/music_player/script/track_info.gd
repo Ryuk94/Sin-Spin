@@ -8,16 +8,12 @@ var beat_count: int
 var stream: Array
 
 var layer_count: int:
-	get: return stream.size()
+	get:
+		return stream.size()
+
 
 func serialize() -> Dictionary:
-	return {
-		"name": name,
-		"artist": artist,
-		"beat_count": beat_count,
-		"bpm": bpm,
-		"stream": stream
-	}
+	return {"name": name, "artist": artist, "beat_count": beat_count, "bpm": bpm, "stream": stream}
 
 
 func transfer(t: TrackInfo) -> void:
